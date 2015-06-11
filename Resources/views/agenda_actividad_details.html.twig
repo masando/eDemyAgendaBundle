@@ -1,0 +1,44 @@
+<div class="center">
+    <h2><a href="{{ path('edemy_agenda_actividad_frontpage') }}">Volver al Listado de Actividades</a></h2>
+</div>
+
+<div id="agenda_actividad_details">
+    <h2>{{ entity.nombre }}</h2>
+    {% if entity.responsables|length %}
+        {% for responsable in entity.responsables %}
+            {% if responsable.published %}
+                <h3>Responsables: 
+                {{ responsable.nombre ~ ' ' ~ responsable.apellido1 }}
+                </h3>
+            {% endif %}
+            {% if loop.length > loop.index %}&nbsp;y&nbsp;{% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if entity.description is defined %}
+        <div class="description">
+            {{ entity.description|raw }}
+        </div>
+    {% endif %}
+    {% if entity.horarios|length %}
+    <div class="horarios">
+        <p><b>Horarios:</b></p>
+        {% for horario in entity.horarios %}
+            <p>{{ horario }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if entity.imagenes %}
+    <div class="imagenes">
+        {% for imagen in entity.imagenes %}
+            <img src="{{ imagen.webpath(600, null, app.request.host) }}" alt="{{ entity.nombre }}" />
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="clear">
+    <p class="center">Más información en el teléfono 965386116</p>
+    </div>
+</div>
+
+<div class="center">
+    <h2><a href="{{ path('edemy_agenda_actividad_frontpage') }}">Volver al Listado de Actividades</a></h2>
+</div>

@@ -1,0 +1,47 @@
+<div id="agenda_actividades">
+    <h1>Listado de Actividades en Espacio Namasté</h1>
+    {% for entity in entities %}
+    <div class="actividad">
+        <h2>
+            <a href="{{ path("edemy_agenda_actividad_details" , { 'slug' : entity.slug }) }}">
+                {{ entity.name }}
+            </a>
+        </h2>
+
+        {#
+        {% if entity.description is defined %}
+            <div class="description">
+                {{ entity.description|raw }}
+            </div>
+        {% endif %}
+        #}
+        
+        {#
+        {% if entity.horarios|length %}
+        <div class="horarios">
+            <p><b>Horarios:</b></p>
+            {% for horario in entity.horarios %}
+                <p>{{ horario }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        #}
+        
+        {% if entity.imagenes %}
+        <div class="imagenes">
+            {% if entity.imagenes|first %}
+                <a href="{{ path("edemy_agenda_actividad_details" , { 'slug' : entity.slug }) }}">
+                    <img src="{{ entity.imagenes|first.webpath(250, null, app.request.host) }}" alt="{{ entity.imagenes|first.name }}" />
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="clear float_right">
+            <a href="{{ path("edemy_agenda_actividad_details" , { 'slug' : entity.slug }) }}">
+                Más información
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

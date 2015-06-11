@@ -1,0 +1,6 @@
+edemy_agenda_actividad_details:
+    path:           /{_locale}/agenda/actividad/{slug}
+    defaults:       { _controller: edemy.main:indexAction }
+    methods:        [ GET ]
+    requirements:   { _locale: es|en, id: \d+ }
+

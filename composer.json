@@ -1,0 +1,22 @@
+{
+  "name" : "edemy/agendabundle",
+  "description" : "Agenda Bundle for eDemy Framework",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "Manuel Sanchís",
+    "email" : "msanchis@edemy.es"
+  }],
+  "keywords" : [
+    "edemy agenda bundle"
+  ],
+  "license" : [
+    "GNU v2"
+  ],
+  "require" : {
+    "edemy/mainbundle": "*",
+  },
+  "autoload" : {
+    "psr-0" : { "eDemy\\AgendaBundle" : "" }
+  },
+  "target-dir": "eDemy/AgendaBundle"
+}

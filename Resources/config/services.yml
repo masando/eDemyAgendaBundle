@@ -1,0 +1,7 @@
+services:
+    edemy.agenda:
+        class: "eDemy\AgendaBundle\Controller\AgendaController"
+        calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
+        tags:
+            - { name: kernel.event_subscriber }
