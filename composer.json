@@ -13,7 +13,7 @@
     "GNU v2"
   ],
   "require" : {
-    "edemy/mainbundle": "*",
+    "edemy/mainbundle": "*"
   },
   "autoload" : {
     "psr-0" : { "eDemy\\AgendaBundle" : "" }
