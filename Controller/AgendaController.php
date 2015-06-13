@@ -4,6 +4,8 @@ namespace eDemy\AgendaBundle\Controller;
 
 use eDemy\MainBundle\Controller\BaseController;
 use eDemy\MainBundle\Event\ContentEvent;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use eDemy\MainBundle\Entity\Param;
 
 class AgendaController extends BaseController
 {
@@ -14,7 +16,22 @@ class AgendaController extends BaseController
             'edemy_agenda_frontpage_cache_validation' => array('onCacheValidation', 0),
             'edemy_agenda_actividad_details_lastmodified' => array('onActividadDetailsLastModified', 0),
             'edemy_agenda_actividad_details' => array('onActividadDetails', 0),
+            'edemy_mainmenu'                        => array('onAgendaMainMenu', 0),
         ));
+    }
+
+    public function onAgendaMainMenu(GenericEvent $menuEvent) {
+        $items = array();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $item = new Param($this->get('doctrine.orm.entity_manager'));
+            $item->setName('Admin_Agenda');
+            $item->setValue('edemy_agenda_frontpage');
+            $items[] = $item;
+        }
+
+        $menuEvent['items'] = array_merge($menuEvent['items'], $items);
+
+        return true;
     }
 
     public function onFrontpage(ContentEvent $event)
@@ -40,7 +57,7 @@ class AgendaController extends BaseController
     public function onActividadFrontpage(ContentEvent $event) {
         $this->get('edemy.meta')->setTitlePrefix("Actividades");
 
-        $this->addEventModule($event, 'agenda_actividad_frontpage.html.twig', array(
+        $this->addEventModule($event, 'templates/agenda_actividad_frontpage', array(
             'entities' => $this->getRepository($event->getRoute())->findAllOrdered($this->getNamespace()),
         ));
     }
@@ -74,7 +91,7 @@ class AgendaController extends BaseController
         $this->get('edemy.meta')->setDescription($entity->getMetaDescription());
         $this->get('edemy.meta')->setKeywords($entity->getMetaKeywords());
 
-        $this->addEventModule($event, 'agenda_actividad_details.html.twig', array(
+        $this->addEventModule($event, 'templates/agenda_actividad_details', array(
             'entity' => $entity,
         ));
     }
