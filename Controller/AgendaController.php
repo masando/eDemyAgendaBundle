@@ -16,6 +16,7 @@ class AgendaController extends BaseController
             'edemy_agenda_frontpage_cache_validation' => array('onCacheValidation', 0),
             'edemy_agenda_actividad_details_lastmodified' => array('onActividadDetailsLastModified', 0),
             'edemy_agenda_actividad_details' => array('onActividadDetails', 0),
+            'edemy_agenda_frontpage'                        => array('onFrontpage', 0),
             'edemy_mainmenu'                        => array('onAgendaMainMenu', 0),
         ));
     }
@@ -25,7 +26,10 @@ class AgendaController extends BaseController
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $item = new Param($this->get('doctrine.orm.entity_manager'));
             $item->setName('Admin_Agenda');
-            $item->setValue('edemy_agenda_frontpage');
+            if($namespace = $this->getNamespace()) {
+                $namespace .= ".";
+            }
+            $item->setValue($namespace . 'edemy_agenda_actividad_index');
             $items[] = $item;
         }
 
@@ -44,7 +48,8 @@ class AgendaController extends BaseController
         $entity = $this->getRepository('edemy_agenda_actividad_frontpage')->findLastModified($this->getNamespace());
         //die(var_dump($actividad->getUpdated()));        
         $lastmodified = $entity->getUpdated();
-        $lastmodified_files = $this->getLastModifiedFiles('/../../AgendaBundle/Resources/views', '*.html.twig');
+//        $lastmodified_files = $this->getLastModifiedFiles('/../../AgendaBundle/Resources/views', '*.html.twig');
+        $lastmodified_files = null;
         if($lastmodified_files > $lastmodified) {
             $lastmodified = $lastmodified_files;
         }

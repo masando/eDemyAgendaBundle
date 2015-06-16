@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use eDemy\MainBundle\Entity\BaseEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
+
 
 /**
  * @ORM\Table(name="AgendaResponsable")

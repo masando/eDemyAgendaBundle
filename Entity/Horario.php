@@ -4,6 +4,8 @@ namespace eDemy\AgendaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use eDemy\MainBundle\Entity\BaseEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @ORM\Entity
