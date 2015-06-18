@@ -62,7 +62,7 @@ class AgendaController extends BaseController
     public function onActividadFrontpage(ContentEvent $event) {
         $this->get('edemy.meta')->setTitlePrefix("Actividades");
 
-        $this->addEventModule($event, 'templates/agenda_actividad_frontpage', array(
+        $this->addEventModule($event, 'templates/agenda/agenda_actividad_frontpage', array(
             'entities' => $this->getRepository($event->getRoute())->findAllOrdered($this->getNamespace()),
         ));
     }
@@ -96,7 +96,7 @@ class AgendaController extends BaseController
         $this->get('edemy.meta')->setDescription($entity->getMetaDescription());
         $this->get('edemy.meta')->setKeywords($entity->getMetaKeywords());
 
-        $this->addEventModule($event, 'templates/agenda_actividad_details', array(
+        $this->addEventModule($event, 'templates/agenda/agenda_actividad_details', array(
             'entity' => $entity,
         ));
     }
