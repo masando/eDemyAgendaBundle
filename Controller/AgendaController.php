@@ -16,7 +16,11 @@ class AgendaController extends BaseController
             'edemy_agenda_frontpage_cache_validation' => array('onCacheValidation', 0),
             'edemy_agenda_actividad_details_lastmodified' => array('onActividadDetailsLastModified', 0),
             'edemy_agenda_actividad_details' => array('onActividadDetails', 0),
-            'edemy_agenda_frontpage'                        => array('onFrontpage', 0),
+            'edemy_agenda_frontpage'         => array('onFrontpage', 0),
+            'edemy_frontpage_module_namespace' => array(
+                array('onFrontpageModuleNamespace_Actividades', 1),
+                //array('onFrontpageModuleNamespace_Products', 0),
+            ),
             'edemy_mainmenu'                        => array('onAgendaMainMenu', 0),
         ));
     }
@@ -107,5 +111,30 @@ class AgendaController extends BaseController
 
     public function onCacheValidation(ContentEvent $event) {
         $event->stopPropagation();
+    }
+
+
+    public function onFrontpageModuleNamespace_Actividades(ContentEvent $event)
+    {
+        if($this->getParam('frontpage_module.actividades.enable') == 1) {
+            //$this->get('edemy.meta')->setTitlePrefix("Catálogo");
+            $categories = $this->getRepository('eDemyAgendaBundle:Actividad')->findAllOrdered($this->getNamespace(), true);
+
+            $this->addEventModule($event, "templates/agenda/frontpagemodule_actividades", array(
+                'entities' => $categories
+            ));
+        }
+    }
+
+    public function onFrontpageModuleNamespace_Products(ContentEvent $event)
+    {
+        if($this->getParam('frontpage_module.product.enable') == 1) {
+            //$this->get('edemy.meta')->setTitlePrefix("Catálogo");
+            $products = $this->getRepository('eDemyProductBundle:Product')->findAllFavorites($this->getNamespace(), $this->get('doctrine.orm.entity_manager'), 'destacado');
+
+            $this->addEventModule($event, "templates/product/frontpagemodule_favoriteproducts", array(
+                'entities' => $products
+            ));
+        }
     }
 }
